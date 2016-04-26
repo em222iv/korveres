@@ -9,10 +9,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('angular2/core');
 var store_1 = require('./services/store');
+var store_2 = require('./services/userStore');
+
 var TodoApp = (function () {
-    function TodoApp(todoStore) {
+    function TodoApp(todoStore,userStore) {
         this.newTodoText = '';
+        this.username = '';
+        this.password = '';
         this.todoStore = todoStore;
+        this.userStore = userStore;
+        this.user = userStore.user;
     }
     TodoApp.prototype.stopEditing = function (todo, editedTitle) {
         todo.title = editedTitle;
@@ -47,12 +53,20 @@ var TodoApp = (function () {
             this.newTodoText = '';
         }
     };
+    TodoApp.prototype.loginUser = function () {
+        this.userStore.login(this.username,this.password);
+    };
+    TodoApp.prototype.logoutUser = function () {
+        this.username = '';
+        this.password = '';
+        this.userStore.logout();
+    };
     TodoApp = __decorate([
         core_1.Component({
             selector: 'todo-app',
             templateUrl: 'app/app.html'
-        }), 
-        __metadata('design:paramtypes', [store_1.TodoStore])
+        }),
+        __metadata('design:paramtypes', [store_1.TodoStore,store_2.UserStore])
     ], TodoApp);
     return TodoApp;
 })();

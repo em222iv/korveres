@@ -2,7 +2,7 @@
 	'use strict';
 	const Vue = require('vue');
 	const todoStorage = require('./store').todoStorage;
-
+	const userStorage = require('./store').userStorage;
 	var filters = {
 		all: function (todos) {
 			return todos;
@@ -30,6 +30,9 @@
 			newTodo: '',
 			editedTodo: null,
 			visibility: 'all',
+			loggedIn: false,
+			username: '',
+			password: ''
 		},
 
 		// watch todos change for localStorage persistence
@@ -63,6 +66,16 @@
 		// methods that implement data logic.
 		// note there's no DOM manipulation here at all.
 		methods: {
+			loginUser: function () {
+				userStorage.login(this.username,this.password).then(function(data){
+					app.$set('loggedIn', data);
+				});
+				this.username = '';
+				this.password = '';
+			},
+			logoutUser: function () {
+				this.loggedIn = userStorage.logout(1);
+			},
 
 			addTodo: function () {
 				var value = this.newTodo && this.newTodo.trim();

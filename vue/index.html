@@ -10,6 +10,8 @@
 	</head>
 	<body>
 		<section class="todoapp">
+			<div v-if="loggedIn">
+			<div id="auth-buton" class="logout" @click="logoutUser">logout</div>
 			<header class="header">
 				<h1>todos</h1>
 				<input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newTodo" @keyup.enter="addTodo">
@@ -40,6 +42,15 @@
 					Clear completed
 				</button>
 			</footer>
+			</div>
+			<div  v-else>
+			<div id="auth-buton" class="login" @click="loginUser">login</div>
+			<header class="header">
+				<h1>Login</h1>
+				<input v-model="username" >
+				<input v-model="password"  >
+			</header>
+		</div>
 		</section>
 		<footer class="info">
 			<p>Double-click to edit a todo</p>
